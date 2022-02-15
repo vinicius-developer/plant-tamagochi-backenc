@@ -10,10 +10,10 @@ import java.util.UUID;
 
 public class ValidateDataToBuildPlant implements Validator {
 
-    private HashMap<String, Serializable> data;
+    private HashMap data;
 
     @Override
-    public void validate(HashMap<String, Serializable> data)
+    public void validate(HashMap data)
             throws InvalidAttributesException, InvalidAttributeValueException {
 
         this.data = data;

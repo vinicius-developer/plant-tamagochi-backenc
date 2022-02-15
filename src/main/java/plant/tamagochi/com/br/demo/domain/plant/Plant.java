@@ -12,33 +12,34 @@ public class Plant {
 
     private UUID uuid;
 
-    private boolean isRain;
+    private Boolean isRain;
 
-    private int moistureAir;
+    private Integer moistureAir;
 
-    private byte tamperature;
+    private Byte temperature;
 
-    private int moistureSoil;
+    private Integer moistureSoil;
 
-    public Plant(UUID uuid, boolean isRain, int moistureAir, byte tamperature, int moistureSoil) {
+    public Plant(UUID uuid, boolean isRain, int moistureAir, byte temperature, int moistureSoil) {
         this.uuid = uuid;
         this.isRain = isRain;
         this.moistureAir = moistureAir;
-        this.tamperature = tamperature;
+        this.temperature = temperature;
         this.moistureSoil = moistureSoil;
     }
 
-    public void Plant(HashMap<String, Serializable> data)
-            throws InvalidAttributesException, InvalidAttributeValueException {
+    public Plant(HashMap data) throws InvalidAttributesException, InvalidAttributeValueException {
 
         new ValidateDataToBuildPlant().validate(data);
 
-        this.uuid = data.get("uuid");
-        this.isRain = isRain;
-        this.moistureAir = moistureAir;
-        this.tamperature = tamperature;
-        this.moistureSoil = moistureSoil;
+        this.uuid = (UUID) data.get("uuid");
+        this.isRain = (Boolean) data.get("isRain");
+        this.moistureAir = (Integer) data.get("moistureAir");
+        this.temperature = (Byte) data.get("temperature");
+        this.moistureSoil = (Integer) data.get("moistureSoil");
 
     }
+
+
 
 }

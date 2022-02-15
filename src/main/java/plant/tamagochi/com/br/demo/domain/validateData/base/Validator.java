@@ -7,6 +7,6 @@ import java.util.HashMap;
 
 public interface Validator {
 
-    void validate(HashMap<String, Serializable> data) throws InvalidAttributesException, InvalidAttributeValueException;
+    void validate(HashMap data) throws InvalidAttributesException, InvalidAttributeValueException;
 
 }

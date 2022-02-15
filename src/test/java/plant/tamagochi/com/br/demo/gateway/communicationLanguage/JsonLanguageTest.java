@@ -5,7 +5,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import javax.naming.directory.InvalidAttributeValueException;
+import javax.naming.directory.InvalidAttributesException;
 import java.security.InvalidParameterException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -27,11 +30,13 @@ class JsonLanguageTest {
     }
 
     @Test
-    public void transformStringInJson() throws JsonProcessingException {
+    public void transformStringInJson() throws JsonProcessingException, InvalidAttributesException, InvalidAttributeValueException {
 
-        CommunicationLanguage jsonLenguage = new JsonLanguage(this.json);
+        CommunicationLanguage jsonLanguage = new JsonLanguage();
 
-        Map<String, Object> dataJson = jsonLenguage.transform();
+        jsonLanguage.setData(this.json);
+
+        HashMap dataJson = jsonLanguage.transform();
 
         assertEquals(dataJson.get("temperature"), 25);
         assertEquals(dataJson.get("moistureSoil"), 125);
@@ -45,7 +50,9 @@ class JsonLanguageTest {
     public void assertExceptionWhenNoInformaionDataForJson() {
 
         Exception exception = assertThrows(InvalidParameterException.class, () -> {
-                new JsonLanguage("");
+            CommunicationLanguage jsonLanguage = new JsonLanguage();
+
+            jsonLanguage.setData("");
         });
 
         assertEquals(exception.getMessage(), "it's necessary define data with setData");

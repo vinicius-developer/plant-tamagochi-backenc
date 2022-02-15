@@ -2,6 +2,7 @@ package plant.tamagochi.com.br.demo.gateway.communicationLanguage.base;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import javax.naming.directory.InvalidAttributeValueException;
 import javax.naming.directory.InvalidAttributesException;
 import java.io.Serializable;
 import java.security.InvalidParameterException;
@@ -12,7 +13,7 @@ public abstract class CommunicationLanguage {
 
     protected String data;
 
-    public CommunicationLanguage(String data) {
+    public void setData(String data) {
 
         if(data.isEmpty()) {
             throw new InvalidParameterException("it's necessary define data with setData");
@@ -22,6 +23,6 @@ public abstract class CommunicationLanguage {
 
     }
 
-    public abstract HashMap<String, Serializable> transform() throws JsonProcessingException;
+    public abstract HashMap transform() throws JsonProcessingException, InvalidAttributesException, InvalidAttributeValueException;
 
 }
