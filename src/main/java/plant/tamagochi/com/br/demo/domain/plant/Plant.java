@@ -1,24 +1,19 @@
 package plant.tamagochi.com.br.demo.domain.plant;
 
-import plant.tamagochi.com.br.demo.domain.validateData.ValidateDataToBuildPlant;
-
-import javax.naming.directory.InvalidAttributeValueException;
-import javax.naming.directory.InvalidAttributesException;
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.UUID;
 
 public class Plant {
 
-    private UUID uuid;
+    private final UUID uuid;
 
-    private Boolean isRain;
+    private final Boolean isRain;
 
-    private Integer moistureAir;
+    private final Integer moistureAir;
 
-    private Byte temperature;
+    private final Byte temperature;
 
-    private Integer moistureSoil;
+    private final Integer moistureSoil;
 
     public Plant(UUID uuid, boolean isRain, int moistureAir, byte temperature, int moistureSoil) {
         this.uuid = uuid;
@@ -28,18 +23,34 @@ public class Plant {
         this.moistureSoil = moistureSoil;
     }
 
-    public Plant(HashMap data) throws InvalidAttributesException, InvalidAttributeValueException {
+    public Plant(HashMap<?, ?> data) {
 
-        new ValidateDataToBuildPlant().validate(data);
-
-        this.uuid = (UUID) data.get("uuid");
-        this.isRain = (Boolean) data.get("isRain");
-        this.moistureAir = (Integer) data.get("moistureAir");
-        this.temperature = (Byte) data.get("temperature");
-        this.moistureSoil = (Integer) data.get("moistureSoil");
+        this.uuid = UUID.fromString(data.get("uuid").toString());
+        this.isRain = Boolean.parseBoolean(data.get("isRain").toString());
+        this.moistureAir = Integer.parseInt(data.get("moistureAir").toString());
+        this.temperature = Byte.parseByte(data.get("temperature").toString());
+        this.moistureSoil = Integer.parseInt(data.get("moistureSoil").toString());
 
     }
 
+    public UUID getUuid() {
+        return uuid;
+    }
 
+    public Boolean getRain() {
+        return isRain;
+    }
+
+    public Integer getMoistureAir() {
+        return moistureAir;
+    }
+
+    public Byte getTemperature() {
+        return temperature;
+    }
+
+    public Integer getMoistureSoil() {
+        return moistureSoil;
+    }
 
 }

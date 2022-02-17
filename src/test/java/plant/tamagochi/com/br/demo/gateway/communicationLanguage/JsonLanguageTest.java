@@ -9,8 +9,6 @@ import javax.naming.directory.InvalidAttributeValueException;
 import javax.naming.directory.InvalidAttributesException;
 import java.security.InvalidParameterException;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -36,18 +34,32 @@ class JsonLanguageTest {
 
         jsonLanguage.setData(this.json);
 
-        HashMap dataJson = jsonLanguage.transform();
+        HashMap<?, ?> dataJson = jsonLanguage.transform();
 
         assertEquals(dataJson.get("temperature"), 25);
         assertEquals(dataJson.get("moistureSoil"), 125);
         assertEquals(dataJson.get("moistureAir"), 85);
-        assertEquals(dataJson.get("isRain"), false);
-        assertEquals(dataJson.get("uuid"), UUID.fromString("a15ace80-8d20-11ec-b909-0242ac120002"));
+        assertEquals(dataJson.get("isRain"), "false");
+        assertEquals(dataJson.get("uuid"),"a15ace80-8d20-11ec-b909-0242ac120002");
 
     }
 
     @Test
-    public void assertExceptionWhenNoInformaionDataForJson() {
+    public void assertIfDataNoSeeted() {
+
+        Exception exception = assertThrows(InvalidAttributeValueException.class, () -> {
+            CommunicationLanguage jsonLanguage = new JsonLanguage();
+
+            jsonLanguage.transform();
+        });
+
+        assertEquals(exception.getMessage(), "No data setted");
+
+    }
+
+
+    @Test
+    public void assertExceptionWhenNoInformationDataForJson() {
 
         Exception exception = assertThrows(InvalidParameterException.class, () -> {
             CommunicationLanguage jsonLanguage = new JsonLanguage();
@@ -58,5 +70,20 @@ class JsonLanguageTest {
         assertEquals(exception.getMessage(), "it's necessary define data with setData");
 
     }
+
+    @Test
+    public void assertExceptionIfJsonInvalid() {
+
+        Exception exception = assertThrows(JsonProcessingException.class, () -> {
+            CommunicationLanguage jsonLanguage = new JsonLanguage();
+
+            jsonLanguage.setData("asd");
+
+            jsonLanguage.transform();
+        });
+
+    }
+
+
 
 }

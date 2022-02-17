@@ -3,11 +3,8 @@ package plant.tamagochi.com.br.demo.gateway.communicationLanguage.base;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import javax.naming.directory.InvalidAttributeValueException;
-import javax.naming.directory.InvalidAttributesException;
-import java.io.Serializable;
 import java.security.InvalidParameterException;
 import java.util.HashMap;
-import java.util.Map;
 
 public abstract class CommunicationLanguage {
 
@@ -23,6 +20,13 @@ public abstract class CommunicationLanguage {
 
     }
 
-    public abstract HashMap transform() throws JsonProcessingException, InvalidAttributesException, InvalidAttributeValueException;
+    protected void validateData() throws InvalidAttributeValueException {
+        if(this.data == null) {
+            throw new InvalidAttributeValueException("No data setted");
+        }
+    }
+
+
+    public abstract HashMap<?, ?> transform() throws JsonProcessingException, InvalidAttributeValueException;
 
 }
